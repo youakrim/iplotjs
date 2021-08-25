@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>JSPlot - Demo</title>
+    <link rel="stylesheet" type="text/css" href="sf_font.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+    <input type="range" id="starting_value" value="0" min="-1000" step="0.1" max="699" oninput="updatePlot();" />
+    <input type="range" id="zoom_right" value="0" min="-100" step="0.1" max="600" oninput="zoomRight();" />
+    <br/>
+  </body>
+  <script type="text/javascript" src='JSPlot.js'></script>
+  <script type="text/javascript">
+    var points = [[1,264],[100,247], [230,270], [280,300],[340,250], [460,302], [600,312], [650,254]];
+    var plot = new JSPlot(points,window.innerWidth,window.innerHeight-50);
+    plot.setXAxisGenerator(new TimeAxisGenerator(plot.getOriginValueX(),plot.getMaxValueX(),3,24))
+    document.body.append(plot.canvas);
+    function updatePlot(){
+      var new_origin = parseInt(document.getElementById("starting_value").value);
+      var new_max = plot.getMaxValueX() + (new_origin - plot.getOriginValueX());
+      plot.setMaxValueX(new_max);
+      plot.setOriginValueX(new_origin);
+    }
+    function zoomRight(){
+      var new_origin = parseInt(document.getElementById("zoom_right").value);
+      plot.setOriginValueX(new_origin);
+    }
+  </script>
